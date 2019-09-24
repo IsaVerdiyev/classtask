@@ -9,11 +9,14 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityNotFoundException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Repository
 public class CustomerRepositoryDef {
     private static final Logger logger = LoggerFactory.getLogger(CustomerRepositoryDef.class);
+
+    Long id;
 
 
     @Autowired
@@ -22,6 +25,7 @@ public class CustomerRepositoryDef {
     public CustomerRepositoryDef(HashMap<Long, CustomerDto> customers){
 
         this.customers = customers;
+        id = (long) customers.size();
     }
 
     public CustomerDto findById(Long id){
@@ -47,6 +51,14 @@ public class CustomerRepositoryDef {
 
     public CustomerDto save(CustomerDto customerDto){
         logger.info("CustomerRepository.save(CustomerDto c) was called with c.id = " + customerDto.getId());
-        return customers.put(customerDto.getId(), customerDto);
+        if(customerDto.getId() != null && (customerDto.getId() >= id || !customers.containsKey(customerDto.getId()))){
+            logger.warn("Customer with id = "+ customerDto.getId() + " was not found. Can't be updated");
+            throw new NoSuchElementException();
+        }
+        else if (customerDto.getId() == null){
+            customerDto.setId(++id);
+        }
+        customers.put(customerDto.getId(), customerDto);
+        return customerDto;
     }
 }
