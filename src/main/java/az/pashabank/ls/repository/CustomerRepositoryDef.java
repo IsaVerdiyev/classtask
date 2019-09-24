@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Repository
-public class CustomerRepositoryDef implements CustomerRepository {
+public class CustomerRepositoryDef {
     private static final Logger logger = LoggerFactory.getLogger(CustomerRepositoryDef.class);
 
 
@@ -25,21 +25,20 @@ public class CustomerRepositoryDef implements CustomerRepository {
     }
 
     public CustomerDto findById(Long id){
-
-        logger.info("CustomerRepository was called with " + id);
+        logger.info("CustomerRepository.findById(Long id) was called with id = " + id);
         return customers.get(id);
     }
 
     public List<CustomerDto> findAll(){
-        logger.info("CustomerRepository.findAll was called");
+        logger.info("CustomerRepository.findAll() was called");
         return customers.values().stream().collect(Collectors.toList());
     }
 
     public void deleteById(Long id){
         CustomerDto customerDto = findById(id);
-        logger.info("CustomerRepository.deleteById was called with " + id);
+        logger.info("CustomerRepository.deleteById(Long id) was called with id = " + id);
         if(customerDto == null){
-            logger.info("Coudn't delete customerDto with parameter id. Was not found");
+            logger.warn("Coudn't delete customerDto with parameter id. Was not found");
             throw  new EntityNotFoundException();
         }
 
@@ -47,7 +46,7 @@ public class CustomerRepositoryDef implements CustomerRepository {
     }
 
     public CustomerDto save(CustomerDto customerDto){
-        logger.info("CustomerRepository.save was called with id " + customerDto.getId());
+        logger.info("CustomerRepository.save(CustomerDto c) was called with c.id = " + customerDto.getId());
         return customers.put(customerDto.getId(), customerDto);
     }
 }

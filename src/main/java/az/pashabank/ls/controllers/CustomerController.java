@@ -21,31 +21,31 @@ public class CustomerController {
 
     @GetMapping
     public List<CustomerDto> get(){
-        logger.info("get method was called");
+        logger.info("CustomerController.get() was called");
         return customerService.recieveAllCustomers();
     }
 
     @GetMapping("/{id}")
     public CustomerDto get(@PathVariable("id") Long id){
-        logger.info(id + " as parameter was passed to get(id)");
+        logger.info("CustomerController.get(Long id) was called with id = " + id);
         return customerService.recieveCustomerById(id);
     }
 
     @PostMapping
     public CustomerDto post(@RequestBody CustomerDto customerDto){
-        logger.info(customerDto.getId() + " customer was passed in post");
+        logger.info("CustomerController.post(CustomerDto c) was called with c.id = " + customerDto.getId());
         return customerService.addCustomer(customerDto);
     }
 
     @PutMapping
     public CustomerDto put(@RequestBody CustomerDto customerDto){
-        logger.info(customerDto.getId() + " customer was passed to put");
-        return customerService.addCustomer(customerDto);
+        logger.info("CustomerController.put(CustomerDto c) was called with c.id = " + customerDto.getId());
+        return customerService.updateCustomer(customerDto);
     }
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable("id") Long id){
-        logger.info(id + "was passed in delete");
+        logger.info("CustomerController.delete(Long id) was called id = " + id);
         customerService.deleteCustomer(id);
     }
 }
