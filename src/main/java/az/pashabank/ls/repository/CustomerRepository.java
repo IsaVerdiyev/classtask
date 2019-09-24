@@ -1,63 +1,12 @@
 package az.pashabank.ls.repository;
 
 import az.pashabank.ls.entities.CustomerDto;
-import az.pashabank.ls.services.HashMapProvider;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Profile;
-import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityNotFoundException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.stream.Collectors;
 
-@Repository
-public class CustomerRepository {
-    private static final Logger logger = LoggerFactory.getLogger(CustomerRepository.class);
-
-    Long id;
-
-    HashMap<Long, CustomerDto> customers;
-
-    public CustomerRepository(HashMapProvider hashMapProvider){
-
-        this.customers = hashMapProvider.recieveHashMap();
-        id = (long) customers.size();
-    }
-
-    public CustomerDto findById(Long id){
-        logger.info("CustomerRepository.findById(Long id) was called with id = " + id);
-        return customers.get(id);
-    }
-
-    public List<CustomerDto> findAll(){
-        logger.info("CustomerRepository.findAll() was called");
-        return customers.values().stream().collect(Collectors.toList());
-    }
-
-    public void deleteById(Long id){
-        CustomerDto customerDto = findById(id);
-        logger.info("CustomerRepository.deleteById(Long id) was called with id = " + id);
-        if(customerDto == null){
-            logger.warn("Coudn't delete customerDto with parameter id. Was not found");
-            throw  new EntityNotFoundException();
-        }
-
-        customers.remove(id);
-    }
-
-    public CustomerDto save(CustomerDto customerDto){
-        logger.info("CustomerRepository.save(CustomerDto c) was called with c.id = " + customerDto.getId());
-        if(customerDto.getId() != null && (customerDto.getId() >= id || !customers.containsKey(customerDto.getId()))){
-            logger.warn("Customer with id = "+ customerDto.getId() + " was not found. Can't be updated");
-            throw new NoSuchElementException();
-        }
-        else if (customerDto.getId() == null){
-            customerDto.setId(++id);
-        }
-        customers.put(customerDto.getId(), customerDto);
-        return customerDto;
-    }
+public interface CustomerRepository {
+    public CustomerDto findById(Long id);
+    public List<CustomerDto> findAll();
+    public void deleteById(Long id);
+    public CustomerDto save(CustomerDto customerDto);
 }
