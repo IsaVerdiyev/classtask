@@ -1,7 +1,7 @@
 package az.pashabank.ls.services;
 
 import az.pashabank.ls.entities.CustomerDto;
-import az.pashabank.ls.repository.CustomerRepositoryDef;
+import az.pashabank.ls.repository.CustomerRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,20 +18,20 @@ public class CustomerService {
     private static final Logger logger = LoggerFactory.getLogger(CustomerService.class);
 
     @Autowired
-    CustomerRepositoryDef customerRepositoryDef;
+    CustomerRepository customerRepository;
 
-    public CustomerService(CustomerRepositoryDef customerRepositoryDef){
-        this.customerRepositoryDef = customerRepositoryDef;
+    public CustomerService(CustomerRepository customerRepository){
+        this.customerRepository = customerRepository;
     }
 
     public CustomerDto recieveCustomerById(Long Id){
         logger.info("CustomerService.recieveCustomerById(Long id) was called with id = " + Id);
-        return customerRepositoryDef.findById(Id);
+        return customerRepository.findById(Id);
     }
 
     public List<CustomerDto> recieveAllCustomers(){
         logger.info("CustomerService.recieveAllCustomers() was called");
-        return customerRepositoryDef.findAll();
+        return customerRepository.findAll();
     }
 
     public CustomerDto addCustomer(CustomerDto customerDto){
@@ -40,7 +40,7 @@ public class CustomerService {
         if(foundCustomer != null){
             throw new EntityExistsException();
         }
-        return customerRepositoryDef.save(customerDto);
+        return customerRepository.save(customerDto);
     }
 
     public CustomerDto updateCustomer(CustomerDto customerDto){
@@ -49,12 +49,12 @@ public class CustomerService {
         if(foundCustomer == null){
             throw new EntityNotFoundException();
         }
-        return customerRepositoryDef.save(customerDto);
+        return customerRepository.save(customerDto);
     }
 
     public void deleteCustomer(Long id){
         logger.info("CustomerService.deleteCustomer(Long id) was called with id = " + id);
-        customerRepositoryDef.deleteById(id);
+        customerRepository.deleteById(id);
     }
 
 }
