@@ -37,7 +37,7 @@ public class CustomerRepositoryDefault implements CustomerRepository {
         foundCustomer = customers.get(id);
         if (foundCustomer == null) {
             logger.warn("Customer was not found with id = " + id);
-            throw new EntityNotFoundException("Customer not found with id = " + id.toString());
+            throw new EntityNotFoundException("Customer not found with id = " + String.valueOf(id));
         }
         return foundCustomer;
     }
