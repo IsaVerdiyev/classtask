@@ -6,6 +6,7 @@ import az.pashabank.ls.repository.CustomerRepositoryDev;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.jpa.JpaObjectRetrievalFailureException;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityExistsException;
@@ -37,10 +38,9 @@ public class CustomerService {
 
     public CustomerDto addCustomer(CustomerDto customerDto){
         logger.info("CustomerService.addCustomer(CustomerDto c) was called with customer c.id = " + customerDto.getId());
-        CustomerDto foundCustomer = recieveCustomerById(customerDto.getId());
-        if(foundCustomer != null){
-            throw new EntityExistsException();
-        }
+        try {
+            recieveCustomerById(customerDto.getId());
+        }catch(EntityNotFoundException | JpaObjectRetrievalFailureException ex){}
         return customerRepository.save(customerDto);
     }
 
