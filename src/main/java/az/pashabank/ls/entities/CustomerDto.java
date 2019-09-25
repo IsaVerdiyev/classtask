@@ -3,6 +3,9 @@ package az.pashabank.ls.entities;
 
 import lombok.*;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 @Setter
 @Getter
 @Builder
@@ -10,6 +13,11 @@ import lombok.*;
 @AllArgsConstructor
 public class CustomerDto {
     private Long id;
-    private String name;
+
+    @NotBlank(message = "First name is mandatory")
+    private String firstName;
+
+    @NotBlank(message = "Last name is mandatory")
+    private String lastName;
 
 }

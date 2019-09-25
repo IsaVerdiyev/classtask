@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,13 +33,13 @@ public class CustomerController {
     }
 
     @PostMapping
-    public CustomerDto post(@RequestBody CustomerDto customerDto){
+    public CustomerDto post(@Valid @RequestBody CustomerDto customerDto){
         logger.info("CustomerController.post(CustomerDto c) was called with c.id = " + customerDto.getId());
         return customerService.addCustomer(customerDto);
     }
 
     @PutMapping
-    public CustomerDto put(@RequestBody CustomerDto customerDto){
+    public CustomerDto put(@Valid @RequestBody CustomerDto customerDto){
         logger.info("CustomerController.put(CustomerDto c) was called with c.id = " + customerDto.getId());
         return customerService.updateCustomer(customerDto);
     }
