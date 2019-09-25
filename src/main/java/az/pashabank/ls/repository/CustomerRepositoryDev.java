@@ -33,7 +33,13 @@ public class CustomerRepositoryDev implements CustomerRepository{
 
     public CustomerDto findById(Long id){
         logger.info("CustomerRepository.findById(Long id) was called with id = " + id);
-        return customers.get(id);
+        CustomerDto foundCustomer;
+        foundCustomer = customers.get(id);
+        if (foundCustomer == null) {
+            logger.warn("Customer was not found with id = " + id);
+            throw new EntityNotFoundException("Customer not found with id = " + id.toString());
+        }
+        return foundCustomer;
     }
 
     public List<CustomerDto> findAll(){
@@ -42,13 +48,8 @@ public class CustomerRepositoryDev implements CustomerRepository{
     }
 
     public void deleteById(Long id){
-        CustomerDto customerDto = findById(id);
         logger.info("CustomerRepository.deleteById(Long id) was called with id = " + id);
-        if(customerDto == null){
-            logger.warn("Coudn't delete customerDto with parameter id. Was not found");
-            throw  new EntityNotFoundException();
-        }
-
+        findById(id);
         customers.remove(id);
     }
 
