@@ -22,8 +22,8 @@ public class CustomerRepositoryDefault implements CustomerRepository{
 
     HashMap<Long, CustomerDto> customers = new HashMap<>(){
         {
-            put(1L, CustomerDto.builder().id(1L).name("Cusomer 1").build());
-            put(2L, CustomerDto.builder().id(2L).name("Customer 2").build());
+            put(1L, CustomerDto.builder().id(1L).firstName("Azer").lastName("Sharifov").build());
+            put(2L, CustomerDto.builder().id(2L).firstName("Orxan").lastName("Mutalibov").build());
         }
     };
 
