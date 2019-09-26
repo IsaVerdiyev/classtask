@@ -1,6 +1,7 @@
 package az.pashabank.ls.repository;
 
 import az.pashabank.ls.entities.CustomerDto;
+import az.pashabank.ls.entities.CustomerEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Profile;
@@ -20,10 +21,10 @@ public class CustomerRepositoryDev implements CustomerRepository{
 
     Long id;
 
-    HashMap<Long, CustomerDto> customers = new HashMap<>(){
+    HashMap<Long, CustomerEntity> customers = new HashMap<>(){
         {
-            put(1L, CustomerDto.builder().id(1L).firstName("Elvin").lastName("Asadullayev").build());
-            put(2L, CustomerDto.builder().id(2L).firstName("Shahriyar").lastName("Xalilov").build());
+            put(1L, CustomerEntity.builder().id(1L).firstName("Elvin").lastName("Asadullayev").build());
+            put(2L, CustomerEntity.builder().id(2L).firstName("Shahriyar").lastName("Xalilov").build());
         }
     };
 
@@ -31,9 +32,9 @@ public class CustomerRepositoryDev implements CustomerRepository{
         id = (long) customers.size();
     }
 
-    public CustomerDto findById(Long id){
+    public CustomerEntity findById(Long id){
         logger.info("CustomerRepository.findById(Long id) was called with id = " + id);
-        CustomerDto foundCustomer;
+        CustomerEntity foundCustomer;
         foundCustomer = customers.get(id);
         if (foundCustomer == null) {
             logger.warn("Customer was not found with id = " + id);
@@ -42,7 +43,7 @@ public class CustomerRepositoryDev implements CustomerRepository{
         return foundCustomer;
     }
 
-    public List<CustomerDto> findAll(){
+    public List<CustomerEntity> findAll(){
         logger.info("CustomerRepository.findAll() was called");
         return customers.values().stream().collect(Collectors.toList());
     }
@@ -53,16 +54,16 @@ public class CustomerRepositoryDev implements CustomerRepository{
         customers.remove(id);
     }
 
-    public CustomerDto save(CustomerDto customerDto){
-        logger.info("CustomerRepository.save(CustomerDto c) was called with c.id = " + customerDto.getId());
-        if(customerDto.getId() != null && (customerDto.getId() >= id || !customers.containsKey(customerDto.getId()))){
-            logger.warn("Customer with id = "+ customerDto.getId() + " was not found. Can't be updated");
+    public CustomerEntity save(CustomerEntity customerEntity){
+        logger.info("CustomerRepository.save(CustomerDto c) was called with c.id = " + customerEntity.getId());
+        if(customerEntity.getId() != null && (customerEntity.getId() >= id || !customers.containsKey(customerEntity.getId()))){
+            logger.warn("Customer with id = "+ customerEntity.getId() + " was not found. Can't be updated");
             throw new NoSuchElementException();
         }
-        else if (customerDto.getId() == null){
-            customerDto.setId(++id);
+        else if (customerEntity.getId() == null){
+            customerEntity.setId(++id);
         }
-        customers.put(customerDto.getId(), customerDto);
-        return customerDto;
+        customers.put(customerEntity.getId(), customerEntity);
+        return customerEntity;
     }
 }
