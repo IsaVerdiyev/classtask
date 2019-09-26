@@ -13,8 +13,9 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
-@Repository
+
 @Profile("default")
+@Repository
 public class CustomerRepositoryDefault implements CustomerRepository {
 
     private static final Logger logger = LoggerFactory.getLogger(CustomerRepositoryDev.class);
