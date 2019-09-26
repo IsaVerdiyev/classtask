@@ -6,6 +6,7 @@ import az.pashabank.ls.repository.CustomerRepositoryDev;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.orm.jpa.JpaObjectRetrievalFailureException;
 import org.springframework.stereotype.Service;
 
@@ -45,7 +46,7 @@ public class CustomerService {
         logger.info("CustomerService.addCustomer(CustomerDto c) was called with customer c.id = " + customerDto.getId());
         try {
             recieveCustomerById(customerDto.getId());
-        }catch(EntityNotFoundException | JpaObjectRetrievalFailureException ex){}
+        }catch(EntityNotFoundException | JpaObjectRetrievalFailureException | IllegalArgumentException | InvalidDataAccessApiUsageException ex){}
         return customerDtoEntityMapper
                 .getDtoFromEntity(customerRepository
                         .save(customerDtoEntityMapper.getEntityFromDto(customerDto)));
