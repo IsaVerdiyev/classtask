@@ -2,15 +2,12 @@ package az.pashabank.ls.services;
 
 import az.pashabank.ls.entities.CustomerDto;
 import az.pashabank.ls.repository.CustomerRepository;
-import az.pashabank.ls.repository.CustomerRepositoryDev;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.orm.jpa.JpaObjectRetrievalFailureException;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -61,6 +58,16 @@ public class CustomerService {
         return customerDtoEntityMapper
                 .getDtoFromEntity(customerRepository
                         .save(customerDtoEntityMapper.getEntityFromDto(customerDto)));
+    }
+
+
+    public CustomerDto updateCustomerPartially(CustomerDto customerDto){
+        logger.info("CustomerService.updateCustomerPartially(Map<String,Object> up, Long id) was called with id = {}", customerDto.getId());
+        CustomerDto foundCustomer = recieveCustomerById(customerDto.getId());
+        if(foundCustomer == null){
+            throw new EntityNotFoundException();
+        }
+        return updateCustomer(customerDtoEntityMapper.getDtoForPatchFromSentAndFoundDto(customerDto, foundCustomer));
     }
 
     public void deleteCustomer(Long id){
