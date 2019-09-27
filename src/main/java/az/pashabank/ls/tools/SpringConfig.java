@@ -19,7 +19,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 public class SpringConfig {
     private static final Logger logger = LoggerFactory.getLogger(SpringConfig.class);
 
-    @Autowired
+
     private CustomerService customerService;
     private NamesService namesService;
     private SurnamesService surnamesService;

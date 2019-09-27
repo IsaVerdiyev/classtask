@@ -1,12 +1,14 @@
 package az.pashabank.ls.repository;
 
 import az.pashabank.ls.entities.CustomerDto;
+import az.pashabank.ls.entities.CustomerEntity;
 
 import java.util.List;
+import java.util.Map;
 
 public interface CustomerRepository {
-    public CustomerDto findById(Long id);
-    public List<CustomerDto> findAll();
+    public CustomerEntity findById(Long id);
+    public List<CustomerEntity> findAll();
     public void deleteById(Long id);
-    public CustomerDto save(CustomerDto customerDto);
+    public CustomerEntity save(CustomerEntity customerEntity);
 }
