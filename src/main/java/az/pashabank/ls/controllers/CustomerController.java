@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/customers")
@@ -44,6 +45,12 @@ public class CustomerController {
     public ResponseEntity<CustomerDto> put(@Valid @RequestBody CustomerDto customerDto){
         logger.info("CustomerController.put(CustomerDto c) was called with c.id = " + customerDto.getId());
         return new ResponseEntity<>(customerService.updateCustomer(customerDto), HttpStatus.OK);
+    }
+
+    @PatchMapping
+    public ResponseEntity<CustomerDto> patch(@RequestBody CustomerDto customerDto){
+        logger.info("CustomerController.patch(Map<String, Object> updates, Long id) was called with id = {}", customerDto.getId());
+        return new ResponseEntity<>(customerService.updateCustomerPartially(customerDto), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")

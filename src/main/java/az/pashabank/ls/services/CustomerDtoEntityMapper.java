@@ -21,4 +21,14 @@ public class CustomerDtoEntityMapper {
                 .lastName(customerEntity.getLastName())
                 .build();
     }
+
+
+    CustomerDto getDtoForPatchFromSentAndFoundDto(CustomerDto customerDto, CustomerDto foundCustomer){
+         CustomerDto c = CustomerDto.builder()
+                .id(foundCustomer.getId())
+                .firstName(customerDto.getFirstName() != null ? customerDto.getFirstName() : foundCustomer.getFirstName())
+                .lastName(customerDto.getLastName() != null ? customerDto.getLastName() : foundCustomer.getLastName())
+                .build();
+         return c;
+    }
 }
