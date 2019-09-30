@@ -67,7 +67,9 @@
             <version>5.4.5.Final</version>
         </dependency>
 
-    </dependencies>
+
+
+	</dependencies>
 
 	<build>
 		<plugins>
@@ -82,6 +84,36 @@
 				<configuration>
 					<propertyFile>src/main/resources/liquibase.properties</propertyFile>
 				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>update</goal>
+						</goals>
+					</execution>
+				</executions>
+				<!--<dependencies>
+					&lt;!&ndash; https://mvnrepository.com/artifact/org.liquibase.ext/liquibase-hibernate4 &ndash;&gt;
+					<dependency>
+						<groupId>org.liquibase.ext</groupId>
+						<artifactId>liquibase-hibernate4</artifactId>
+						<version>3.6</version>
+					</dependency>
+
+					&lt;!&ndash; https://mvnrepository.com/artifact/org.springframework/spring-beans &ndash;&gt;
+					<dependency>
+						<groupId>org.springframework</groupId>
+						<artifactId>spring-beans</artifactId>
+						<version>5.1.10.RELEASE</version>
+					</dependency>
+
+					&lt;!&ndash; https://mvnrepository.com/artifact/org.springframework.data/spring-data-jpa &ndash;&gt;
+					<dependency>
+						<groupId>org.springframework.data</groupId>
+						<artifactId>spring-data-jpa</artifactId>
+						<version>2.1.10.RELEASE</version>
+					</dependency>
+
+				</dependencies>-->
 			</plugin>
 		</plugins>
 	</build>
